@@ -1,0 +1,3 @@
+ALTER TABLE usuario
+    ADD status VARCHAR(20) NOT NULL
+    CONSTRAINT DF_usuario_status DEFAULT 'ATIVO'
