@@ -1,16 +1,16 @@
 package br.com.c7flex.academia.auth.service;
 
-import br.com.c7flex.academia.auth.dto.GoogleLoginRequest;
-import br.com.c7flex.academia.auth.dto.LoginResponse;
-import br.com.c7flex.academia.auth.dto.MeResponse;
-import br.com.c7flex.academia.auth.security.AuthenticatedUser;
+import br.com.c7flex.academia.auth.dto.*;
+import br.com.c7flex.academia.user.entity.Usuario;
 
 public interface AuthService {
 
     LoginResponse loginGoogle(GoogleLoginRequest request);
 
+    JwtResponse devLogin(DevLoginRequest request);
+
     MeResponse me();
 
-    //AuthenticatedUser getUsuarioLogado();
+    Usuario getUsuarioLogado();
 
 }

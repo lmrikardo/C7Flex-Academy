@@ -1,8 +1,6 @@
 package br.com.c7flex.academia.auth.controller;
 
-import br.com.c7flex.academia.auth.dto.GoogleLoginRequest;
-import br.com.c7flex.academia.auth.dto.LoginResponse;
-import br.com.c7flex.academia.auth.dto.MeResponse;
+import br.com.c7flex.academia.auth.dto.*;
 import br.com.c7flex.academia.auth.service.AuthService;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
@@ -29,6 +27,18 @@ public class AuthController {
                 )
         );
 
+    }
+
+    @PostMapping("/dev-login")
+    public ResponseEntity<ApiResponse<JwtResponse>> devLogin(
+            @Valid @RequestBody DevLoginRequest request) {
+
+        return ResponseEntity.ok(
+                ResponseFactory.success(
+                        "Login realizado com sucesso.",
+                        service.devLogin(request)
+                )
+        );
     }
 
     @GetMapping("/me")

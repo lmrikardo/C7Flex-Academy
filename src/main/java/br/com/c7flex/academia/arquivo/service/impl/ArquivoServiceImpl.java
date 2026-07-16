@@ -7,6 +7,8 @@ import br.com.c7flex.academia.arquivo.repository.ArquivoRepository;
 import br.com.c7flex.academia.arquivo.service.ArquivoService;
 import br.com.c7flex.academia.aula.entity.Aula;
 import br.com.c7flex.academia.aula.repository.AulaRepository;
+import br.com.c7flex.academia.auth.authorization.TipoRecurso;
+import br.com.c7flex.academia.auth.authorization.annotation.ValidarAcesso;
 import br.com.c7flex.academia.common.exception.ApiException;
 import br.com.c7flex.academia.common.exception.ErrorCode;
 import br.com.c7flex.academia.common.response.PageResponse;
@@ -58,6 +60,7 @@ public class ArquivoServiceImpl implements ArquivoService {
 
     }
 
+    @ValidarAcesso(tipo = TipoRecurso.AULA, parametro = "aulaId")
     @Override
     public PageResponse<ArquivoResponse> listar(
             Long aulaId,

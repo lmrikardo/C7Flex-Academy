@@ -1,9 +1,12 @@
 package br.com.c7flex.academia.module.service.impl;
 
+import br.com.c7flex.academia.auth.authorization.TipoRecurso;
+import br.com.c7flex.academia.auth.authorization.annotation.ValidarAcesso;
+import br.com.c7flex.academia.common.exception.ApiException;
+import br.com.c7flex.academia.common.exception.ErrorCode;
 import br.com.c7flex.academia.common.response.PageResponse;
 import br.com.c7flex.academia.course.entity.Curso;
 import br.com.c7flex.academia.course.repository.CursoRepository;
-import br.com.c7flex.academia.common.exception.ResourceNotFoundException;
 import br.com.c7flex.academia.module.dto.ModuloRequest;
 import br.com.c7flex.academia.module.dto.ModuloResponse;
 import br.com.c7flex.academia.module.entity.Modulo;
@@ -30,7 +33,7 @@ public class ModuloServiceImpl implements ModuloService {
 
         Curso curso = cursoRepository.findById(dto.cursoId())
 
-                .orElseThrow(() -> new ResourceNotFoundException("Curso não encontrado"));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Curso não encontrado"));
 
         Modulo modulo = new Modulo();
 
@@ -44,6 +47,7 @@ public class ModuloServiceImpl implements ModuloService {
 
     }
 
+    @ValidarAcesso(tipo = TipoRecurso.CURSO, parametro = "cursoId")
     @Override
     public PageResponse<ModuloResponse> listar(Long cursoId, Pageable pageable) {
 
@@ -72,7 +76,7 @@ public class ModuloServiceImpl implements ModuloService {
 
     }
 
-    @Override
+   @Override
     public void excluir(Long id){
 
         repository.deleteById(id);

@@ -33,7 +33,7 @@ public class ModuloController {
                         service.salvar(dto)));
     }
 
-    @GetMapping("/{cursoId}")
+    @GetMapping("/curso/{cursoId}")
     public ResponseEntity<ApiResponse<PageResponse<ModuloResponse>>> listar(
             @PathVariable Long cursoId,
             @PageableDefault(sort = "ordem") Pageable pageable){

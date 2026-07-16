@@ -6,9 +6,12 @@ import br.com.c7flex.academia.aula.entity.Aula;
 import br.com.c7flex.academia.aula.mapper.AulaMapper;
 import br.com.c7flex.academia.aula.repository.AulaRepository;
 import br.com.c7flex.academia.aula.service.AulaService;
+import br.com.c7flex.academia.auth.authorization.TipoRecurso;
+import br.com.c7flex.academia.auth.authorization.annotation.ValidarAcesso;
+import br.com.c7flex.academia.common.exception.ApiException;
+import br.com.c7flex.academia.common.exception.ErrorCode;
 import br.com.c7flex.academia.common.response.PageResponse;
 import br.com.c7flex.academia.common.utils.YoutubeUtils;
-import br.com.c7flex.academia.common.exception.ResourceNotFoundException;
 import br.com.c7flex.academia.module.entity.Modulo;
 import br.com.c7flex.academia.module.repository.ModuloRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +31,7 @@ public class AulaServiceImpl implements AulaService {
     public AulaResponse salvar(AulaRequest dto) {
 
         Modulo modulo = moduloRepository.findById(dto.moduloId())
-                .orElseThrow(() -> new ResourceNotFoundException("Módulo não encontrado."));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Módulo não encontrado."));
 
         Aula aula = new Aula();
 
@@ -49,15 +52,17 @@ public class AulaServiceImpl implements AulaService {
         return mapper.toResponse(repository.save(aula));
     }
 
+    @ValidarAcesso(tipo = TipoRecurso.AULA, parametro = "id")
     @Override
     public AulaResponse buscar(Long id) {
 
         Aula aula = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Aula não encontrada."));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Aula não encontrada."));
 
         return mapper.toResponse(aula);
     }
 
+    @ValidarAcesso(tipo = TipoRecurso.MODULO, parametro = "moduloId")
     @Override
     public PageResponse<AulaResponse> listar(Long moduloId, Pageable pageable) {
 
@@ -89,10 +94,10 @@ public class AulaServiceImpl implements AulaService {
     public AulaResponse atualizar(Long id, AulaRequest dto) {
 
         Aula aula = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Aula não encontrada."));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Aula não encontrada."));
 
         Modulo modulo = moduloRepository.findById(dto.moduloId())
-                .orElseThrow(() -> new ResourceNotFoundException("Módulo não encontrado."));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Módulo não encontrado."));
 
         aula.setTitulo(dto.titulo());
         aula.setDescricao(dto.descricao());
@@ -114,7 +119,7 @@ public class AulaServiceImpl implements AulaService {
     public void excluir(Long id) {
 
         Aula aula = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Aula não encontrada."));
+                .orElseThrow(() -> new ApiException(ErrorCode.NOT_FOUND, "Aula não encontrada."));
 
         repository.delete(aula);
     }

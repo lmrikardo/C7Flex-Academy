@@ -1,9 +1,6 @@
 package br.com.c7flex.academia.auth.service.impl;
 
-import br.com.c7flex.academia.auth.dto.GoogleLoginRequest;
-import br.com.c7flex.academia.auth.dto.GoogleUser;
-import br.com.c7flex.academia.auth.dto.LoginResponse;
-import br.com.c7flex.academia.auth.dto.MeResponse;
+import br.com.c7flex.academia.auth.dto.*;
 import br.com.c7flex.academia.auth.service.AuthService;
 import br.com.c7flex.academia.auth.service.GoogleTokenVerifier;
 import br.com.c7flex.academia.auth.service.JwtService;
@@ -14,6 +11,7 @@ import br.com.c7flex.academia.user.entity.StatusUsuario;
 import br.com.c7flex.academia.user.entity.Usuario;
 import br.com.c7flex.academia.user.mapper.UsuarioMapper;
 import br.com.c7flex.academia.user.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -62,21 +60,46 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    private Usuario criarUsuario(GoogleUser googleUser) {
+    @Override
+    @Transactional
+    public JwtResponse devLogin(DevLoginRequest request) {
+
+        Usuario usuario = repository
+                .findByEmail(request.getEmail())
+                .orElseGet(() ->
+                        criarUsuario("Usuário Desenvolvimento", request.getEmail(), Role.ROLE_ADMIN)
+                );
+
+        String token = jwtService.gerarToken(usuario);
+
+        return JwtResponse.builder()
+                .token(token)
+                .usuario(mapper.toResponse(usuario))
+                .build();
+
+    }
+
+    private Usuario criarUsuario(String nome, String email, Role role) {
 
         Usuario usuario = new Usuario();
 
-        usuario.setGoogleId(googleUser.googleId());
-
-        usuario.setNome(googleUser.nome());
-
-        usuario.setEmail(googleUser.email());
-
-        usuario.setFoto(googleUser.foto());
-
-        usuario.setRole(Role.ROLE_ALUNO);
+        usuario.setNome(nome);
+        usuario.setEmail(email);
 
         usuario.setAtivo(true);
+        usuario.setStatus(StatusUsuario.ATIVO);
+        usuario.setRole(role);
+
+        return repository.save(usuario);
+
+    }
+
+    private Usuario criarUsuario(GoogleUser googleUser) {
+
+        Usuario usuario = criarUsuario(googleUser.nome(), googleUser.email(), Role.ROLE_ALUNO);
+
+        usuario.setGoogleId(googleUser.googleId());
+        usuario.setFoto(googleUser.foto());
 
         return repository.save(usuario);
 
@@ -95,7 +118,7 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    private Usuario getUsuarioLogado() {
+    public Usuario getUsuarioLogado() {
 
         Authentication authentication =
                 SecurityContextHolder.getContext()
