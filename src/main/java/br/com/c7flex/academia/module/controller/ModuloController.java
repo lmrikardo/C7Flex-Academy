@@ -1,5 +1,6 @@
 package br.com.c7flex.academia.module.controller;
 
+import br.com.c7flex.academia.common.constants.ApiPaths;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.PageResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/modulos")
+@RequestMapping(ApiPaths.MODULO)
 @RequiredArgsConstructor
 public class ModuloController {
 

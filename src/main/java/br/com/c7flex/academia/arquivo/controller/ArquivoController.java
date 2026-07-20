@@ -2,6 +2,7 @@ package br.com.c7flex.academia.arquivo.controller;
 
 import br.com.c7flex.academia.arquivo.dto.ArquivoResponse;
 import br.com.c7flex.academia.arquivo.service.ArquivoService;
+import br.com.c7flex.academia.common.constants.ApiPaths;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.PageResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/arquivos")
+@RequestMapping(ApiPaths.ARQUIVOS)
 @RequiredArgsConstructor
 public class ArquivoController {
 

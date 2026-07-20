@@ -3,6 +3,7 @@ package br.com.c7flex.academia.aula.controller;
 import br.com.c7flex.academia.aula.dto.AulaRequest;
 import br.com.c7flex.academia.aula.dto.AulaResponse;
 import br.com.c7flex.academia.aula.service.AulaService;
+import br.com.c7flex.academia.common.constants.ApiPaths;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.PageResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/aulas")
+@RequestMapping(ApiPaths.AULAS)
 @RequiredArgsConstructor
 public class AulaController {
 

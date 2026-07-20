@@ -1,5 +1,6 @@
 package br.com.c7flex.academia.matricula.controller;
 
+import br.com.c7flex.academia.common.constants.ApiPaths;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
 import br.com.c7flex.academia.matricula.dto.MatriculaRequest;
@@ -12,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/matriculas")
+@RequestMapping(ApiPaths.MATRICULA)
 @RequiredArgsConstructor
 public class MatriculaController {
 

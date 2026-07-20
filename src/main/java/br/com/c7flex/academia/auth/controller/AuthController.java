@@ -2,6 +2,7 @@ package br.com.c7flex.academia.auth.controller;
 
 import br.com.c7flex.academia.auth.dto.*;
 import br.com.c7flex.academia.auth.service.AuthService;
+import br.com.c7flex.academia.common.constants.ApiPaths;
 import br.com.c7flex.academia.common.response.ApiResponse;
 import br.com.c7flex.academia.common.response.ResponseFactory;
 import jakarta.validation.Valid;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(ApiPaths.AUTH)
 @RequiredArgsConstructor
 public class AuthController {
 
