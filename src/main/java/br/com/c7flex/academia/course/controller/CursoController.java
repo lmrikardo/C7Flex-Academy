@@ -35,14 +35,19 @@ public class CursoController {
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<CursoResponse>>> listar(@PageableDefault() Pageable pageable) {
 
-        PageResponse<CursoResponse> page = service.listar(pageable);
+        /*PageResponse<CursoResponse> page = service.listar(pageable);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.ok(
                 ApiResponse.<PageResponse<CursoResponse>>builder()
                         .success(true)
                         .message("Cursos carregados com sucesso.")
                         .data(page)
-                        .build());
+                        .build());*/
+
+        return ResponseEntity.ok(
+                ResponseFactory.success(
+                        "Cursos carregados com sucesso.",
+                        service.listar(pageable)));
     }
 
     @GetMapping("/{id}")
@@ -62,7 +67,7 @@ public class CursoController {
 
         CursoResponse curso = service.atualizar(id,dto);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.ok(
                 ApiResponse.<CursoResponse>builder()
                         .success(true)
                         .message("Curso atualizado com sucesso.")

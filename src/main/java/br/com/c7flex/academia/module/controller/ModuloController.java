@@ -39,7 +39,7 @@ public class ModuloController {
 
         PageResponse<ModuloResponse> modulos = service.listar(cursoId, pageable);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(
+        return ResponseEntity.ok(
                 ApiResponse.<PageResponse<ModuloResponse>>builder()
                         .success(true)
                         .message("Modulos carregados com sucesso")

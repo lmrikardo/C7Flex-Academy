@@ -23,7 +23,7 @@ storage:
     path: C:/Temp/UploadsC7Flex
 
 google:
-  client-id: 783484822731-8jon381ark5m43f9o0r450rhblilhqj6.apps.googleusercontent.com
+  client-id: 783484822731-ms32lal1tdb83gh8e2o9tosmovg78fr3.apps.googleusercontent.com
 
 jwt:
   secret: 8f3dfb4c4d9a84b92a43d8b0df1f2ef74ab11b5caa8d6d0db54bb56d2e9b4d75
